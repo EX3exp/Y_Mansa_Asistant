@@ -238,7 +238,7 @@ p, li { white-space: pre-wrap; }
    </property>
    <widget class="QMenu" name="menu">
     <property name="title">
-     <string>도움말</string>
+     <string>크레딧</string>
     </property>
     <addaction name="show_cred"/>
    </widget>
