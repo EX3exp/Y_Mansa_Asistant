@@ -215,20 +215,20 @@ class WindowClass(QMainWindow, form_class):
         self.run_convert.setEnabled(True)
 
     def make_pdf(self):
-       # try:
-        path_ = p.path.replace('/', '\\')
-        self.run_convert.setDisabled(True)
-        self.progress.show()
-        self.execute_pdf_conversion(get_subdirs_infos(path_), path_, temp_category)
-        self.run_convert.setText('변환 완료^w^')
+        try:
+            path_ = p.path.replace('/', '\\')
+            self.run_convert.setDisabled(True)
+            self.progress.show()
+            self.execute_pdf_conversion(get_subdirs_infos(path_), path_, temp_category)
+            self.run_convert.setText('변환 완료^w^')
 
-        #except(PermissionError):
-         #   self.show_info.setPlainText(f'Error: 변환 중단됨\n[Permission denied]\n저장하려는 pdf 파일과 동일한 이름인 파일을 os에서 사용하고 있는 것 같습니다.')
-          #  for temp_path in to_remove:
-          #      rmtree(temp_path, ignore_errors=True)
-        #except:
-         #   for temp_path in to_remove:
-          #      rmtree(temp_path, ignore_errors=True)
+        except(PermissionError):
+            self.show_info.setPlainText(f'Error: 변환 중단됨\n[Permission denied]\n저장하려는 pdf 파일과 동일한 이름인 파일을 os에서 사용하고 있는 것 같습니다.')
+            for temp_path in to_remove:
+                rmtree(temp_path, ignore_errors=True)
+        except:
+            for temp_path in to_remove:
+                rmtree(temp_path, ignore_errors=True)
 def main():
     app = QApplication(sys.argv)
     main_window = WindowClass()
