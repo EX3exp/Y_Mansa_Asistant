@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>main_window</class>
+ <widget class="QMainWindow" name="main_window">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>808</width>
+    <height>550</height>
+   </rect>
+  </property>
+  <property name="font">
+   <font>
+    <family>KoPubWorld돋움체_Pro Light</family>
+    <weight>50</weight>
+    <bold>false</bold>
+   </font>
+  </property>
+  <property name="cursor">
+   <cursorShape>ArrowCursor</cursorShape>
+  </property>
+  <property name="mouseTracking">
+   <bool>true</bool>
+  </property>
+  <property name="windowTitle">
+   <string>만화사랑 편집위원 도우미</string>
+  </property>
+  <widget class="QWidget" name="central_widget">
+   <widget class="QTextBrowser" name="show_path">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>20</y>
+      <width>641</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="cursor" stdset="0">
+     <cursorShape>IBeamCursor</cursorShape>
+    </property>
+    <property name="mouseTracking">
+     <bool>true</bool>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="select_folder">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>20</y>
+      <width>111</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="mouseTracking">
+     <bool>true</bool>
+    </property>
+    <property name="text">
+     <string>폴더 선택</string>
+    </property>
+   </widget>
+   <widget class="QTextBrowser" name="show_info">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>100</y>
+      <width>761</width>
+      <height>141</height>
+     </rect>
+    </property>
+    <property name="cursor" stdset="0">
+     <cursorShape>IBeamCursor</cursorShape>
+    </property>
+    <property name="mouseTracking">
+     <bool>false</bool>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="horizontalScrollBarPolicy">
+     <enum>Qt::ScrollBarAsNeeded</enum>
+    </property>
+    <property name="sizeAdjustPolicy">
+     <enum>QAbstractScrollArea::AdjustIgnored</enum>
+    </property>
+    <property name="html">
+     <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'KoPubWorld돋움체_Pro Light'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Gulim';&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="run_convert">
+    <property name="geometry">
+     <rect>
+      <x>620</x>
+      <y>380</y>
+      <width>161</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="text">
+     <string>pdf로 변환 시작!</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_folder_info">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>80</y>
+      <width>221</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>불러온 폴더의 정보 ∩( ・ω・)∩</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="save_csv">
+    <property name="geometry">
+     <rect>
+      <x>620</x>
+      <y>440</y>
+      <width>161</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="text">
+     <string>참가자 목록 저장(.txt)</string>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="mode_docx">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>290</y>
+      <width>381</width>
+      <height>19</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>개별 표지와 워드 파일(들)을 pdf로 병합 (.docx)</string>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="mode_img">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>340</y>
+      <width>401</width>
+      <height>19</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>개별 표지와 이미지 파일(들)을 pdf로  병합 (.jpg / .png / .tiff)</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="tip">
+    <property name="geometry">
+     <rect>
+      <x>520</x>
+      <y>280</y>
+      <width>261</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#b55382;&quot;&gt;Tip:&lt;/span&gt;&lt;span style=&quot; text-decoration: underline; color:#b55382;&quot;&gt; setting.ini&lt;/span&gt;&lt;span style=&quot; color:#b55382;&quot;&gt;의 &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#b55382;&quot;&gt;files_to_except&lt;/span&gt;&lt;span style=&quot; color:#b55382;&quot;&gt;에 &lt;br/&gt;예외로 처리할 파일(들)의 &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#b55382;&quot;&gt;이름&lt;/span&gt;&lt;span style=&quot; color:#b55382;&quot;&gt;을 집어넣으면 &lt;br/&gt;해당 파일(들)은 &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#b55382;&quot;&gt;병합되지 않고&lt;/span&gt;&lt;span style=&quot; color:#b55382;&quot;&gt; 넘어갑니다.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QProgressBar" name="progress">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>390</y>
+      <width>561</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="cursor">
+     <cursorShape>ArrowCursor</cursorShape>
+    </property>
+    <property name="value">
+     <number>0</number>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_saved_message">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>450</y>
+      <width>571</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#266f26;&quot;&gt;₍₍ ◝(・ω・)◟ ⁾⁾ === 참가자 목록 저장 완료 === (｢• ω •)｢ (｢• ω •)｢&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <zorder>show_path</zorder>
+   <zorder>show_info</zorder>
+   <zorder>label_folder_info</zorder>
+   <zorder>tip</zorder>
+   <zorder>run_convert</zorder>
+   <zorder>save_csv</zorder>
+   <zorder>select_folder</zorder>
+   <zorder>mode_docx</zorder>
+   <zorder>mode_img</zorder>
+   <zorder>progress</zorder>
+   <zorder>label_saved_message</zorder>
+  </widget>
+  <widget class="QStatusBar" name="status_bar">
+   <property name="cursor">
+    <cursorShape>ArrowCursor</cursorShape>
+   </property>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>808</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>도움말</string>
+    </property>
+    <addaction name="show_cred"/>
+   </widget>
+   <addaction name="menu"/>
+  </widget>
+  <action name="actionOpen_Folder">
+   <property name="text">
+    <string>폴더 불러오기</string>
+   </property>
+   <property name="iconText">
+    <string>폴더 선택</string>
+   </property>
+   <property name="toolTip">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;pdf 병합을 진행할 폴더를 선택해 주세요. &lt;/p&gt;&lt;p&gt;하나의 부문만이 들어 있어야 합니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+   <property name="visible">
+    <bool>true</bool>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="show_cred">
+   <property name="text">
+    <string>프로그램 정보</string>
+   </property>
+  </action>
+  <action name="show_credit">
+   <property name="text">
+    <string>제작진 정보</string>
+   </property>
+  </action>
+  <action name="show_manual">
+   <property name="text">
+    <string>유저 매뉴얼</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
