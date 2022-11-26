@@ -15,23 +15,24 @@ from PIL import Image
 
 def convert_cover_to_pdf(subdir_Iterator, temp_dir_path) -> None:
     '''개별 표지를 pdf로 변환해 임시 폴더에 저장합니다.'''
-    cover_file_path = os.path.join(subdir_Iterator.path, cover_file_name)
-    if os.path.isfile(cover_file_path):
-        if '.docx' in cover_file_name:
-            convert_docx_to_pdf(cover_file_path, os.path.join(temp_dir_path, '0.pdf'))
-        elif '.jpg' or '.jpeg' or'.png' or '.tiff' in cover_file_name:
-            convert_img_to_pdf(cover_file_path, os.path.join(temp_dir_path, '0.pdf'))
+    for cover_file_name in cover_file_names:
+        cover_file_path = os.path.join(subdir_Iterator.path, cover_file_name)
+        if os.path.isfile(cover_file_path):
+            if '.docx' in cover_file_name:
+                convert_docx_to_pdf(cover_file_path, os.path.join(temp_dir_path, '0.pdf'))
+            elif '.jpg' or '.jpeg' or'.png' or '.tiff' in cover_file_name:
+                convert_img_to_pdf(cover_file_path, os.path.join(temp_dir_path, '0.pdf'))
+            else:
+                pass
         else:
             pass
-    else:
-        pass
     
 
 def make_filelist_from_subdir_info(subdir_iterator) -> list:
     '''하위폴더 scandir iterator를 받아와 병합에 사용될 해당 하위폴더의 파일들을 추려내고 리스트로 반환합니다.'''
     subdir_filelist = []
     with os.scandir(subdir_iterator.path) as entries:
-        subdir_filelist = [entry for entry in entries if entry.is_file() and entry.name != cover_file_name and entry.name not in files_to_except]
+        subdir_filelist = [entry for entry in entries if entry.is_file() and entry.name not in cover_file_names and entry.name not in files_to_except]
         subdir_filelist.sort(key=lambda x: x.name)
     return subdir_filelist
 
@@ -118,7 +119,7 @@ def merge_pdfs_in_dir(dir_path_to_read: str, dir_path_to_write: str, pdf_name: s
         pdf_paths.sort(key=lambda x: int(x.name.split('.')[0]))
     except:
         pdf_paths.sort(key=lambda x: x.name.split('.'))
-        
+
     print(pdf_paths)
     for pdf in pdf_paths:
         merger.append(pdf.path, import_outline=True)
@@ -224,12 +225,12 @@ def set_seps(_main_sep: str, _sub_sep: str) -> None:
     sub_sep = _sub_sep
 ###
 
-def set_cover_file_name(_cover_file_name: str) -> None:
+def set_cover_file_names(_cover_file_names: str) -> None:
     '''각 작품별 표지로 사용될 개별 표지 파일의 파일명을 설정합니다. 
 지원되는 파일 확장자는 다음과 같습니다. => [.docx / .jpg / .png / .tiff]
 '''
-    global cover_file_name
-    cover_file_name = _cover_file_name
+    global cover_file_names
+    cover_file_names = [name.strip() for name in _cover_file_names.split(',')]
 ###
 
 def set_mode(_mode: int) -> None:
@@ -272,7 +273,7 @@ if config == []:
         config.set("DEFAULT", 'height(mm)', '254')
         config.set("DEFAULT", 'main separator', '_')
         config.set("DEFAULT", 'sub separator', '+')
-        config.set("DEFAULT", 'cover file names', '한 마디.docx')
+        config.set("DEFAULT", 'cover file names', '한 마디.docx, 속표지.jpg')
         config.set("DEFAULT", 'files to except', '왜 3mm 연장해서 원고를 해야 할까.jpg, 작업은 이렇게 해 주세요.txt')
         config.write(configfile)
 else:
@@ -284,8 +285,8 @@ else:
         config.set("DEFAULT", 'main separator', '_')
     if not 'sub_separator' in config:
         config.set("DEFAULT", 'sub separator', '+')
-    if not 'cover_file_name' in config:
-        config.set("DEFAULT", 'cover file names', '한 마디.docx')
+    if not 'cover_file_names' in config:
+        config.set("DEFAULT", 'cover file names', '한 마디.docx, 속표지.jpg')
     if not 'files_to_except' in config:
         config.set("DEFAULT", 'files to except', '왜 3mm 연장해서 원고를 해야 할까.jpg, 작업은 이렇게 해 주세요.txt')
     with open('setting.ini', 'w', encoding='utf-8') as configfile:
@@ -295,7 +296,7 @@ form_class = uic.loadUiType("interface.ui")[0]
 
 set_seps(config['DEFAULT']['main separator'], config['DEFAULT']['sub separator'])
 set_size(config['DEFAULT']['width(mm)'], config['DEFAULT']['height(mm)'])
-set_cover_file_name(config['DEFAULT']['cover file names'])
+set_cover_file_names(config['DEFAULT']['cover file names'])
 set_files_to_except(config['DEFAULT']['files to except'])
 
 class WindowClass(QMainWindow, form_class):
