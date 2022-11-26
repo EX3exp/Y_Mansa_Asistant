@@ -11,7 +11,6 @@ from datetime import datetime
 from PyPDF2 import PdfFileMerger, PdfFileReader, PdfFileWriter
 import win32com.client as winc
 from PIL import Image
-from numba import jit
 
 
 def convert_cover_to_pdf(subdir_Iterator, temp_dir_path) -> None:
@@ -21,7 +20,7 @@ def convert_cover_to_pdf(subdir_Iterator, temp_dir_path) -> None:
         if '.docx' in cover_file_name:
             convert_docx_to_pdf(cover_file_path, os.path.join(temp_dir_path, '0.pdf'))
         elif '.jpg' or '.jpeg' or'.png' or '.tiff' in cover_file_name:
-            convert_imgs_to_pdf((cover_file_path), os.path.join(temp_dir_path, '0.pdf'))
+            convert_img_to_pdf(cover_file_path, os.path.join(temp_dir_path, '0.pdf'))
         else:
             pass
     else:
@@ -44,37 +43,25 @@ def convert_to_pdf(file_list, temp_dir_path):
             if entry.name.endswith('.docx'):
                 convert_docx_to_pdf(entry.path, os.path.join(temp_dir_path, f'1{i}.pdf'))
     elif mode == 2:  #이미지 파일 병합 모드
-        imgs_for_pdf = tuple([entry.path for entry in file_list if entry.name.endswith('.jpg') or entry.name.endswith('.jpeg') or entry.name.endswith('.png') or entry.name.endswith('.tiff')])
-        convert_imgs_to_pdf(imgs_for_pdf, os.path.join(temp_dir_path, '1.pdf'))
+        _imgs_for_pdf = [entry for entry in file_list if entry.name.endswith('.jpg') or entry.name.endswith('.jpeg') or entry.name.endswith('.png') or entry.name.endswith('.tiff')]
+        _imgs_for_pdf.sort(key=lambda x: int(x.name.split('.')[0]))
+        imgs_for_pdf = []
+        for entry in _imgs_for_pdf:
+            imgs_for_pdf.append(entry.path)
+        print(imgs_for_pdf)
+        for i, img_for_pdf in enumerate(imgs_for_pdf):
+            convert_img_to_pdf(img_for_pdf, os.path.join(temp_dir_path, f'1{i}.pdf'))
 
 def convert_docx_to_pdf(docx_path, pdf_path):
     Application = winc.Dispatch("Word.Application")
     docx = Application.Documents.Open(docx_path)
     docx.ExportAsFixedFormat2(pdf_path, 17, OptimizeFor=0) #17 for PDF and 18 for XPS file forma
     Application.Quit()
-@jit(cache=True)
-def convert_imgs_to_pdf(img_paths_list: tuple, pdf_path):
-    img_list = []
-    for i, image_path in enumerate(img_paths_list):
-        if len(img_paths_list) == 1:
-            image_ = Image.open(image_path)
-            image = image_.convert('CMYK')
-            image.save(pdf_path)
-        else:
-            if i == 1:
-                image_ = Image.open(image_path)
-                image_base = image_.convert('CMYK')
-            elif i + 1 < len(img_paths_list):
-                image_ = Image.open(image_path)
-                image = image_.convert('CMYK')
-                img_list.append(image)
-            elif i + 1 == len(img_paths_list):
-                image_ = Image.open(image_path)
-                image = image_.convert('CMYK')
-                img_list.append(image)
-                image_base.save(pdf_path, save_all=True, append_images=img_list)
-            else:
-                pass
+
+def convert_img_to_pdf(img_path, pdf_path):
+    image_ = Image.open(img_path)
+    image = image_.convert('CMYK')
+    image.save(pdf_path)
 
 #아래 함수들에서 사용하기 위해 만든 함수 - 경로 내 하위폴더의 [부문명, 참가자 학번, 참가자명]를 리스트로 반환합니다
 def prepare_data(path: str) -> list:
@@ -127,8 +114,12 @@ def merge_pdfs_in_dir(dir_path_to_read: str, dir_path_to_write: str, pdf_name: s
     merger = PdfFileMerger()
     entries = os.scandir(dir_path_to_read)
     pdf_paths = [entry for entry in entries]
-    pdf_paths.sort(key=lambda x: x.name)
-    
+    try:
+        pdf_paths.sort(key=lambda x: int(x.name.split('.')[0]))
+    except:
+        pdf_paths.sort(key=lambda x: x.name.split('.'))
+        
+    print(pdf_paths)
     for pdf in pdf_paths:
         merger.append(pdf.path, import_outline=True)
     
